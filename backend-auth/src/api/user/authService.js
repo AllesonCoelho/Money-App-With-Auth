@@ -34,7 +34,7 @@ const login = (req, res, next) => {
     })
 }
 
-const validToken = (req, res, next) => {
+const validateToken = (req, res, next) => {
     const token = req.body.token || ''
 
     jwt.verify(token, env.authSecret, function (err, decoded){
@@ -84,4 +84,4 @@ const signUp = (req, res, next) => {
     })
 }
 
-module.exports = { login, signUp, validToken}
+module.exports = { login, signUp, validateToken}
