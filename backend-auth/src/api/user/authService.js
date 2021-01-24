@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('./user.js')
 const env = require('../../../src/.env')
+const user = require('./user.js')
 
 const emailRegex = /\S+@\$+\.\S+/
 const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/
@@ -35,8 +36,52 @@ const login = (req, res, next) => {
 
 const validToken = (req, res, next) => {
     const token = req.body.token || ''
-    
+
     jwt.verify(token, env.authSecret, function (err, decoded){
         return res.status(200).send({valid: !err})
     })
 }
+
+const signUp = (req, res, next) => {
+    const name = req.body.name || ''
+    const email = req.body.email || ''
+    const password = req.body.password || ''
+    const confirmPassword = req.body.confirm_password || ''
+
+
+    if(!email.match(emailRegex)){
+        return res.status(400).send({errors: ['O email informado esta invalido']})
+    }
+
+    if(!password.match(passwordRegex)){
+        return res.status(400).send({errors: ['A senha precisa ter uma letra maiscula, um caractere especial, um numero e ter no minimo 6 letras']
+    })
+    }
+
+    const salt = bcrypt.genSaltSync()
+    const passwordHash = bcrypt.hashSync(password, salt)
+    if(!bcrypt.compareSync(confirmPassword, passwordHash)){
+        return res.status(400).send({errors: ['Senhas nao conferem']})
+    }
+
+    User.findOne({email}, (err, user) =>{
+        if(err){
+            return sendErrorFromDB(res, err)
+        }
+        else if(user){
+            return res.status(400).send({erros: ['Usuario ja cadastrado']})
+        }else{
+            const newUser = new User ({name, email, password: passwordHash})
+            newUser.save(err => {
+                if(err){
+                    return sendErrorFromDB(res, err)
+                }else{
+                    login(req, res, next)
+                }
+            })
+        }
+
+    })
+}
+
+module.exports = { login, signUp, validToken}
