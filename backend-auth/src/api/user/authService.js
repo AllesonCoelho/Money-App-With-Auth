@@ -5,7 +5,7 @@ const User = require('./user.js')
 const env = require('../../../src/.env')
 const user = require('./user.js')
 
-const emailRegex = /\S+@\$+\.\S+/
+const emailRegex = /\S+@\S+\.\S+/
 const passwordRegex = /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/
 
 
