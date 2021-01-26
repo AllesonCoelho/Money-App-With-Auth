@@ -1,22 +1,24 @@
+import reportWebVitals from './reportWebVitals';
 import React from 'react'
 import ReactDom from 'react-dom'
-import {applyMiddleware, createStore} from 'redux'
-import {Provider} from 'react-redux'
+import { applyMiddleware, createStore } from 'redux'
+import { Provider } from 'react-redux'
 
 import promise from 'redux-promise'
 import multi from 'redux-multi'
 import thunk from 'redux-thunk'
 
+import AuthOrApp from './main/authOrApp.jsx'
 import reducers from './main/reducer.js'
-import Routes from './main/routes.jsx'
 
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
 const store = applyMiddleware(multi, thunk, promise)(createStore)(reducers, devTools)
 ReactDom.render(
-    <Provider store={store}>
-        <Routes/> 
-    </Provider>,
-    
-document.getElementById('app'))
+  <Provider store={store}>
+    <AuthOrApp />
+  </Provider>,
+
+  document.getElementById('app'))
+reportWebVitals();
