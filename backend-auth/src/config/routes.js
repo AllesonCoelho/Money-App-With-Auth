@@ -5,7 +5,7 @@ const auth = require('./auth.js')
 module.exports = function(server){
      // Rotas abertas por JWT
     const protectedApi = express.Router()
-    server.use('/api', router)
+    server.use('/api', protectedApi)
 
     protectedApi.use(auth)
     //Rotas abertas

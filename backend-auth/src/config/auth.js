@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken')
-const env = requrie('../.env')
-
+const env = require('../../src/.env')
 
 module.exports = (req, res, next) => {
     if(req.method === 'OPTIONS'){
