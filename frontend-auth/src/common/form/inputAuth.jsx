@@ -1,7 +1,7 @@
 import React from 'react'
-import If from '../operator/if.jsx'
+import If from '../operator/if'
 
-export default props => (
+export default (props) => (
     <If test={!props.hide}>
         <div className="form-group has-feedback">
             <input {...props.input}

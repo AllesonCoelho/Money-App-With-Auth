@@ -9,21 +9,21 @@ import Row from '../common/layout/row.jsx'
 import Grid from '../common/layout/grid.jsx'
 import If from '../common/operator/if.jsx'
 import Messages from '../common/msg/messages.jsx'
-import Input from '../common/form/input.jsx'
+import Input from '../common/form/inputAuth.jsx'
 
 
 class Auth extends Component {
     constructor(props) {
         super(props)
-        this.state = { loginMode: true }
-    }
-    changeMode() {
+        this.state = {loginMode: true}
+        }
+        changeMode() {
         this.setState({ loginMode: !this.state.loginMode })
-    }
-    onSubmit(values) {
+        }
+        onSubmit(values) {
         const { login, signup } = this.props
         this.state.loginMode ? login(values) : signup(values)
-    }
+        }
 
     render() {
         const { loginMode } = this.state
